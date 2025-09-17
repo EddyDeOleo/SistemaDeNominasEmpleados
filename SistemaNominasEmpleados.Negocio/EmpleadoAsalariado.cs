@@ -8,30 +8,12 @@ namespace SistemaNominasEmpleados.Negocio
 {
     public class EmpleadoAsalariado : Empleado
     {
-        // VARIABLE DE INSTANCIA EXTRA
-        private decimal salarioSemanal;
+        public decimal SalarioSemanal { get; set; }
 
-        // CONSTRUCTOR SOBRECARGADO
-        public EmpleadoAsalariado(string primerNombre, string apellidoPaterno, int numeroSeguroSocial, decimal salarioSemanal):base(primerNombre, apellidoPaterno, numeroSeguroSocial) {
-       
-            this.salarioSemanal = salarioSemanal;
-
-        }
-
-        // PROPIEDAD
-        public decimal GSsalarioSemanal
+        public EmpleadoAsalariado(string primerNombre, string apellidoPaterno, string numeroSeguroSocial, decimal salarioSemanal)
+            : base(primerNombre, apellidoPaterno, numeroSeguroSocial)
         {
-            get { return salarioSemanal; }
-            set {
-                if (value < 0)
-                    throw new ArgumentException("El valor no puede ser negativo.");
-                    salarioSemanal = value; }
-        }
-
-        // METODO ABSTRACTO
-        public override decimal calcularPagoSemanal()
-        {
-            return this.salarioSemanal;
+            SalarioSemanal = salarioSemanal;
         }
     }
 }

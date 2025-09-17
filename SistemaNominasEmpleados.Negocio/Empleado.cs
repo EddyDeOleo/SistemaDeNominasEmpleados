@@ -8,56 +8,21 @@ namespace SistemaNominasEmpleados.Negocio
 {
     public abstract class Empleado
     {
-        // VARIABLES DE INSTANCIA
-        protected string primerNombre;
-        protected string apellidoPaterno;
-        protected int numeroSeguroSocial;
+        public string PrimerNombre { get; set; }
+        public string ApellidoPaterno { get; set; }
+        public string NumeroSeguroSocial { get; set; }
 
-        //CONSTRUCTORES
-        public Empleado(string primerNombre, string apellidoPaterno, int numeroSeguroSocial)
+        protected Empleado(string primerNombre, string apellidoPaterno, string numeroSeguroSocial)
         {
-            this.primerNombre = primerNombre;
-            this.apellidoPaterno = apellidoPaterno;
-            this.numeroSeguroSocial = numeroSeguroSocial;
+            PrimerNombre = primerNombre;
+            ApellidoPaterno = apellidoPaterno;
+            NumeroSeguroSocial = numeroSeguroSocial;
         }
 
-        public Empleado(string apellidoPaterno, int numeroSeguroSocial)
+        public override string ToString()
         {
-            this.primerNombre = "EPH";
-            this.apellidoPaterno = apellidoPaterno;
-            this.numeroSeguroSocial = numeroSeguroSocial;
+            return $"{PrimerNombre} {ApellidoPaterno} | NSS: {NumeroSeguroSocial}";
         }
-
-
-        // PROPIEDADES
-        public string GS_primerNombre
-        {
-            get { return primerNombre; }
-            set { primerNombre = value; }
-        }
-
-        public string GS_apellidoPaterno
-        {
-            get { return apellidoPaterno; }
-            set { apellidoPaterno = value; }    
-        }
-
-        public int GS_numeroSeguroSocial
-        {
-            get { return numeroSeguroSocial; }
-
-            set {
-                if (value > 9999999 && value < 1000000)
-                    throw new ArgumentException($"El valor ingresado: {value} debe contener 7 digitos...");
-                    numeroSeguroSocial = value; }
-        }
-
-        // METODO ABSTRACTO
-
-        public abstract decimal calcularPagoSemanal();
-        
-        
-
-
     }
 }
+

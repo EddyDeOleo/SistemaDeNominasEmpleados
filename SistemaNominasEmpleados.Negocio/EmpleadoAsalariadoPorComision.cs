@@ -6,34 +6,21 @@ using System.Threading.Tasks;
 
 namespace SistemaNominasEmpleados.Negocio
 {
-    public class EmpleadoAsalariadoPorComision : EmpleadoPorComision
+    public class EmpleadoAsalariadoPorComision : Empleado
     {
-        protected decimal salarioBase;
+        public decimal VentasBrutas { get; set; }
+        public decimal TarifaComision { get; set; }
+        public decimal SalarioBase { get; set; }
 
-        // constructor
-
-        public EmpleadoAsalariadoPorComision(string primerNombre, string apellidoPaterno, int numeroSeguroSocial, decimal ventasBrutas, decimal tarifaComision, decimal salarioBase) : base(primerNombre, apellidoPaterno, numeroSeguroSocial, ventasBrutas, tarifaComision){
-        this.salarioBase = salarioBase;
-        }
-
-        // propiedades
-
-        public decimal GSsalarioBase
+        public EmpleadoAsalariadoPorComision(string primerNombre, string apellidoPaterno, string numeroSeguroSocial, decimal ventasBrutas, decimal tarifaComision, decimal salarioBase)
+            : base(primerNombre, apellidoPaterno, numeroSeguroSocial)
         {
-            get { return salarioBase ; } set
-            {
-                if (value < 0)
-                    throw new ArgumentException("El valor no puede ser negativo.");
-                salarioBase = value;
-            }
-        }
-
-        // metodo abstracto
-
-        
-        public override decimal calcularPagoSemanal()
-        {
-            return (this.ventasBrutas * this.tarifaComision) + this.salarioBase + (this.salarioBase * 0.10M);
+            VentasBrutas = ventasBrutas;
+            TarifaComision = tarifaComision;
+            SalarioBase = salarioBase;
         }
     }
 }
+
+
+

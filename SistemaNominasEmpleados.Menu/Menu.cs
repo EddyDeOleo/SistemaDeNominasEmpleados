@@ -1,9 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
 using SistemaNominasEmpleados.Negocio;
 
 namespace SistemaNominasEmpleados.MenuSystem
@@ -12,379 +15,263 @@ namespace SistemaNominasEmpleados.MenuSystem
     {
         public static void mostrarMenu()
         {
-
             byte opcion, opcionsecundaria;
-            string primerNombre, apellidoPaterno;
-            int numeroSeguroSocial, horasTrabajadas;
+            string primerNombre, apellidoPaterno, numeroSeguroSocial;
+            int horasTrabajadas;
             decimal salarioSemanal, sueldoPorHora, ventasBrutas, tarifaComision, salarioBase;
 
-            List<Empleado> empleados = new List<Empleado>();
-
             List<EmpleadoAsalariado> asalariados = new List<EmpleadoAsalariado>();
-            List<EmpleadoPorComision> comosionaros = new List<EmpleadoPorComision>();
-            List<EmpleadoAsalariadoPorComision> comisionarios_asalariados = new List<EmpleadoAsalariadoPorComision>();
-            List<EmpleadoPorHoras> empleadosporhoras = new List<EmpleadoPorHoras>();
-
-
+            List<EmpleadoPorComision> comisionarios = new List<EmpleadoPorComision>();
+            List<EmpleadoAsalariadoPorComision> comisionariosAsalariados = new List<EmpleadoAsalariadoPorComision>();
+            List<EmpleadoPorHoras> empleadosPorHoras = new List<EmpleadoPorHoras>();
 
             do
             {
                 Console.WriteLine("\n");
-                Console.WriteLine("*~~ SISTEMA DE NOMINAS DE EMPLEADOS ~~* \n[1] AGREGAR EMPLEADOS \n[2] GENERAR REPORTE \n[3] ELIMINAR EMPLEADOS \n[4] EDITAR EMPLEADOS \n[5] PROBAR RENDIMIENTO \n[6] SALIR");
+                Console.WriteLine("*~~ SISTEMA DE NOMINAS DE EMPLEADOS ~~*");
+                Console.WriteLine("[1] AGREGAR EMPLEADOS");
+                Console.WriteLine("[2] GENERAR REPORTE");
+                Console.WriteLine("[3] ELIMINAR EMPLEADOS");
+                Console.WriteLine("[4] EDITAR EMPLEADOS");
+                Console.WriteLine("[5] PROBAR RENDIMIENTO");
+                Console.WriteLine("[6] SALIR");
+                Console.Write("ELIGE UNA OPCION: ");
 
-                Console.WriteLine("ELIGE UNA OPCION:");
                 string input = Console.ReadLine();
                 bool exito = byte.TryParse(input, out opcion);
 
-                if (exito)
-                {
-                    Console.WriteLine("Tu opcion es: " + opcion);
-
-                    switch (opcion)
-                    {
-
-                        case 1:
-
-                            do
-                            {
-                                Console.WriteLine("\n");
-                                Console.WriteLine("*~~ TIPOS DE EMPLEADOS ~~* \n[1] EMPLEADO ASALARIADO \n[2] EMPLEADO POR COMISION \n[3] EMPLEADO ASALARIADO POR COMISION \n[4] EMPLEADO POR HORA \n[5] SALIR");
-                                Console.WriteLine("ELIGE UNA OPCION:");
-
-                                input = Console.ReadLine();
-                                exito = byte.TryParse(input, out opcionsecundaria);
-
-                                if (exito)
-                                {
-
-                                    switch (opcionsecundaria)
-                                    {
-
-                                        case 1:
-
-                                            Console.WriteLine("INGRESA EL PRIMER NOMBRE DEL EMPLEADO");
-                                            primerNombre = Console.ReadLine();
-                                            Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                            apellidoPaterno = Console.ReadLine();
-                                            Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                            numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                            Console.WriteLine("INGRESA EL SALARIO SEMANAL DEL EMPLEADO");
-                                            salarioSemanal = decimal.Parse(Console.ReadLine());
-
-                                            EmpleadoAsalariado emp_as = new EmpleadoAsalariado(primerNombre, apellidoPaterno, numeroSeguroSocial, salarioSemanal);
-
-                                            Console.WriteLine($"NOMBRE: {emp_as.GS_primerNombre} \nAPELLIDO: {emp_as.GS_apellidoPaterno} \nNSS: {emp_as.GS_numeroSeguroSocial} \nSALARIO SEMANAL: {emp_as.GSsalarioSemanal} \nSALARIO CALCULADO: {emp_as.calcularPagoSemanal():C}");
-
-                                            empleados.Add(emp_as);
-                                            asalariados.Add(emp_as);
-
-
-
-                                            break;
-
-                                        case 2:
-
-                                            Console.WriteLine("INGRESA EL PRIMER NOMBRE DEL EMPLEADO");
-                                            primerNombre = Console.ReadLine();
-                                            Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                            apellidoPaterno = Console.ReadLine();
-                                            Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                            numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                            Console.WriteLine("INGRESA LAS VENTAS BRUTAS DEL EMPLEADO");
-                                            ventasBrutas = decimal.Parse(Console.ReadLine());
-
-                                            Console.WriteLine("INGRESA LA TARIFA DE COMISION DEL EMPLEADO");
-                                            tarifaComision = decimal.Parse(Console.ReadLine());
-
-                                            EmpleadoPorComision emp_com = new EmpleadoPorComision(primerNombre, apellidoPaterno, numeroSeguroSocial, ventasBrutas, tarifaComision);
-
-                                            Console.WriteLine($"NOMBRE: {emp_com.GS_primerNombre} \nAPELLIDO: {emp_com.GS_apellidoPaterno} \nNSS: {emp_com.GS_numeroSeguroSocial} \nVENTAS BRUTAS: {emp_com.GSventasBrutas} \nTARIFA DE COMISIONES: {emp_com.GStarifaComision} \nSALARIO CALCULADO: {emp_com.calcularPagoSemanal():C}");
-
-                                            empleados.Add(emp_com);
-                                            comosionaros.Add(emp_com);
-
-
-                                            break;
-
-                                        case 3:
-
-                                            Console.WriteLine("INGRESA EL PRIMER NOMBRE DEL EMPLEADO");
-                                            primerNombre = Console.ReadLine();
-                                            Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                            apellidoPaterno = Console.ReadLine();
-                                            Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                            numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                            Console.WriteLine("INGRESA LAS VENTAS BRUTAS DEL EMPLEADO");
-                                            ventasBrutas = decimal.Parse(Console.ReadLine());
-                                            Console.WriteLine("INGRESA LA TARIFA DE COMISION DEL EMPLEADO");
-                                            tarifaComision = decimal.Parse(Console.ReadLine());
-                                            Console.WriteLine("INGRESA EL SALARIO BASE DEL EMPLEADO");
-                                            salarioBase = decimal.Parse(Console.ReadLine());
-
-                                            EmpleadoAsalariadoPorComision emp_ascom = new EmpleadoAsalariadoPorComision(primerNombre, apellidoPaterno, numeroSeguroSocial, ventasBrutas, tarifaComision, salarioBase);
-
-                                            Console.WriteLine($"NOMBRE: {emp_ascom.GS_primerNombre} \nAPELLIDO: {emp_ascom.GS_apellidoPaterno} \nNSS: {emp_ascom.GS_numeroSeguroSocial} \nVENTAS BRUTAS: {emp_ascom.GSventasBrutas} \nTARIFA DE COMISIONES: {emp_ascom.GStarifaComision} \nSALARIO BASE: {emp_ascom.GSsalarioBase}\nSALARIO CALCULADO: {emp_ascom.calcularPagoSemanal():C}");
-
-                                            empleados.Add(emp_ascom);
-                                            comisionarios_asalariados.Add(emp_ascom);
-
-                                            break;
-
-                                        case 4:
-
-                                            Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                            apellidoPaterno = Console.ReadLine();
-                                            Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                            numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                            Console.WriteLine("INGRESA EL SUELDO POR HORA DEL EMPLEADO");
-                                            sueldoPorHora = decimal.Parse(Console.ReadLine());
-                                            Console.WriteLine("INGRESA LAS HORAS TRABAJADAS DEL EMPLEADO");
-                                            horasTrabajadas = int.Parse(Console.ReadLine());
-
-
-                                            EmpleadoPorHoras emp_h = new EmpleadoPorHoras(apellidoPaterno, numeroSeguroSocial, sueldoPorHora, horasTrabajadas);
-
-                                            Console.WriteLine($"APELLIDO: {emp_h.GS_apellidoPaterno} \nNSS: {emp_h.GS_numeroSeguroSocial} \nSUELDO POR HORA: {emp_h.GSsueldoPorHora} \nHORAS TRABAJADAS: {emp_h.GShorasTrabajadas} \nSALARIO CALCULADO: {emp_h.calcularPagoSemanal():C}");
-
-                                            empleados.Add(emp_h);
-                                            empleadosporhoras.Add(emp_h);
-
-
-                                            break;
-
-                                        case 5:
-
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    Console.WriteLine("No ingresaste un número válido.");
-                                }
-                            } while (opcionsecundaria != 5);
-
-                            break;
-
-                        case 2:
-
-                            Console.WriteLine("----- EMPLEADOS ASALARIADOS ----- ");
-
-                            foreach (EmpleadoAsalariado asalariado in asalariados)
-                            {
-                                Console.WriteLine($"NOMBRE: {asalariado.GS_primerNombre} APELLIDO: {asalariado.GS_apellidoPaterno} NSS: {asalariado.GS_numeroSeguroSocial} SALARIO SEMANAL: {asalariado.GSsalarioSemanal} SALARIO CALCULADO: {asalariado.calcularPagoSemanal():C}");
-                            }
-
-                            Console.WriteLine("----- EMPLEADOS POR COMISION ----- ");
-
-                            foreach (EmpleadoPorComision comisionario in comosionaros)
-                            {
-                                Console.WriteLine($"NOMBRE: {comisionario.GS_primerNombre} APELLIDO: {comisionario.GS_apellidoPaterno} NSS: {comisionario.GS_numeroSeguroSocial} VENTAS BRUTAS: {comisionario.GSventasBrutas} TARIFA COMISION: {comisionario.GStarifaComision} SALARIO CALCULADO: {comisionario.calcularPagoSemanal():C}");
-                            }
-
-                            Console.WriteLine("----- EMPLEADOS ASALARIADOS POR COMISION ----- ");
-
-                            foreach (EmpleadoAsalariadoPorComision comisionario_asalariado in comisionarios_asalariados)
-                            {
-                                Console.WriteLine($"NOMBRE: {comisionario_asalariado.GS_primerNombre} APELLIDO: {comisionario_asalariado.GS_apellidoPaterno} NSS: {comisionario_asalariado.GS_numeroSeguroSocial} VENTAS BRUTAS: {comisionario_asalariado.GSventasBrutas} TARIFA COMISION: {comisionario_asalariado.GStarifaComision} SALARIO BASE: {comisionario_asalariado.GSsalarioBase} SALARIO CALCULADO: {comisionario_asalariado.calcularPagoSemanal():C}");
-                            }
-
-                            Console.WriteLine("----- EMPLEADOS POR HORAS ----- ");
-
-                            foreach (EmpleadoPorHoras empleadoporhoras in empleadosporhoras)
-                            {
-                                Console.WriteLine($"APELLIDO: {empleadoporhoras.GS_apellidoPaterno} NSS: {empleadoporhoras.GS_numeroSeguroSocial} SUELDO POR HORA: {empleadoporhoras.GSsueldoPorHora} HORAS TRABAJADAS: {empleadoporhoras.GShorasTrabajadas} SALARIO CALCULADO: {empleadoporhoras.calcularPagoSemanal():C}");
-                            }
-
-                            break;
-
-                        case 3:
-
-                            Console.WriteLine("ESCRIBE EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO QUE QUIERES BORRAR:");
-
-                            numeroSeguroSocial = int.Parse(Console.ReadLine());
-
-                            empleados.RemoveAll(e => e.GS_numeroSeguroSocial == numeroSeguroSocial);
-
-                            asalariados.RemoveAll(e => e.GS_numeroSeguroSocial == numeroSeguroSocial);
-                            comisionarios_asalariados.RemoveAll(e => e.GS_numeroSeguroSocial == numeroSeguroSocial);
-                            comosionaros.RemoveAll(e => e.GS_numeroSeguroSocial == numeroSeguroSocial);
-                            empleadosporhoras.RemoveAll(e => e.GS_numeroSeguroSocial == numeroSeguroSocial);
-
-                            break;
-
-                        case 4:
-
-
-                            Console.WriteLine("ESCRIBE EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO QUE QUIERES EDITAR:");
-                            numeroSeguroSocial = int.Parse(Console.ReadLine());
-
-                            
-
-                            do
-                            {
-                                Console.WriteLine("\n");
-                                Console.WriteLine("*~~ ESPECIFICA EL TIPO DE CONTRATO ~~* \n[1] EMPLEADO ASALARIADO \n[2] EMPLEADO POR COMISION \n[3] EMPLEADO ASALARIADO POR COMISION \n[4] EMPLEADO POR HORA \n[5] SALIR");
-                                Console.WriteLine("ELIGE UNA OPCION:");
-
-                                input = Console.ReadLine();
-                                exito = byte.TryParse(input, out opcionsecundaria);
-
-                                if (exito)
-                                {
-
-                                    switch (opcionsecundaria)
-                                    {
-
-                                        case 1:
-
-                                            foreach (EmpleadoAsalariado emp_as in asalariados)
-                                            {
-                                                if (numeroSeguroSocial == emp_as.GS_numeroSeguroSocial)
-                                                {
-                                                    Console.WriteLine("INGRESA EL PRIMER NOMBRE DEL EMPLEADO");
-                                                    emp_as.GS_primerNombre = Console.ReadLine();
-                                                    Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                                    emp_as.GS_apellidoPaterno = Console.ReadLine();
-                                                    Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                                    emp_as.GS_numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA EL SALARIO SEMANAL DEL EMPLEADO");
-                                                    emp_as.GSsalarioSemanal = decimal.Parse(Console.ReadLine());
-
-                                                    Console.WriteLine($"LOS NUEVOS VALORES SON => NOMBRE: {emp_as.GS_primerNombre} \nAPELLIDO: {emp_as.GS_apellidoPaterno} \nNSS: {emp_as.GS_numeroSeguroSocial} \nSALARIO SEMANAL: {emp_as.GSsalarioSemanal} \nSALARIO CALCULADO: {emp_as.calcularPagoSemanal():C}");
-
-
-                                                }
-                                            }
-
-                                            break;
-
-                                        case 2:
-
-                                            foreach (EmpleadoPorComision emp_com in comosionaros)
-                                            {
-
-                                                if (numeroSeguroSocial == emp_com.GS_numeroSeguroSocial)
-                                                {
-
-                                                    Console.WriteLine("INGRESA EL PRIMER NOMBRE DEL EMPLEADO");
-                                                    emp_com.GS_primerNombre = Console.ReadLine();
-                                                    Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                                    emp_com.GS_apellidoPaterno = Console.ReadLine();
-                                                    Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                                    emp_com.GS_numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA LAS VENTAS BRUTAS DEL EMPLEADO");
-                                                    emp_com.GSventasBrutas = decimal.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA LA TARIFA DE COMISION DEL EMPLEADO");
-                                                    emp_com.GStarifaComision = decimal.Parse(Console.ReadLine());
-
-                                                    Console.WriteLine($"LOS NUEVOS VALORES SON => NOMBRE: {emp_com.GS_primerNombre} \nAPELLIDO: {emp_com.GS_apellidoPaterno} \nNSS: {emp_com.GS_numeroSeguroSocial} \nVENTAS BRUTAS: {emp_com.GSventasBrutas} \nTARIFA DE COMISIONES: {emp_com.GStarifaComision} \nSALARIO CALCULADO: {emp_com.calcularPagoSemanal():C}");
-
-
-
-                                                }
-                                            }
-
-                                            break;
-
-                                        case 3:
-
-                                            foreach (EmpleadoAsalariadoPorComision emp_ascom in comisionarios_asalariados)
-                                            {
-
-                                                if (numeroSeguroSocial == emp_ascom.GS_numeroSeguroSocial)
-                                                {
-
-                                                    Console.WriteLine("INGRESA EL PRIMER NOMBRE DEL EMPLEADO");
-                                                    emp_ascom.GS_primerNombre = Console.ReadLine();
-                                                    Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                                    emp_ascom.GS_apellidoPaterno = Console.ReadLine();
-                                                    Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                                    emp_ascom.GS_numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA LAS VENTAS BRUTAS DEL EMPLEADO");
-                                                    emp_ascom.GSventasBrutas = decimal.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA LA TARIFA DE COMISION DEL EMPLEADO");
-                                                    emp_ascom.GStarifaComision = decimal.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA EL SALARIO BASE DEL EMPLEADO");
-                                                    emp_ascom.GSsalarioBase = decimal.Parse(Console.ReadLine());
-
-                                                    Console.WriteLine($"LOS NUEVOS VALORES SON => NOMBRE: {emp_ascom.GS_primerNombre} \nAPELLIDO: {emp_ascom.GS_apellidoPaterno} \nNSS: {emp_ascom.GS_numeroSeguroSocial} \nVENTAS BRUTAS: {emp_ascom.GSventasBrutas} \nTARIFA DE COMISIONES: {emp_ascom.GStarifaComision} \nSALARIO BASE: {emp_ascom.GSsalarioBase}\nSALARIO CALCULADO: {emp_ascom.calcularPagoSemanal():C}");
-
-
-                                                 
-                                                }
-                                            }
-                                            break;
-
-                                        case 4:
-
-                                            foreach (EmpleadoPorHoras emp_h in empleadosporhoras)
-                                            {
-                                                if (numeroSeguroSocial == emp_h.GS_numeroSeguroSocial)
-                                                {
-
-                                                    Console.WriteLine("INGRESA EL APELLIDO PATERNO DEL EMPLEADO");
-                                                    emp_h.GS_apellidoPaterno = Console.ReadLine();
-                                                    Console.WriteLine("INGRESA EL NUMERO DEL SEGURO SOCIAL DEL EMPLEADO");
-                                                    emp_h.GS_numeroSeguroSocial = int.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA EL SUELDO POR HORA DEL EMPLEADO");
-                                                    emp_h.GSsueldoPorHora = decimal.Parse(Console.ReadLine());
-                                                    Console.WriteLine("INGRESA LAS HORAS TRABAJADAS DEL EMPLEADO");
-                                                    emp_h.GShorasTrabajadas = int.Parse(Console.ReadLine());
-
-                                                    Console.WriteLine($"LOS NUEVOS VALORES SON => APELLIDO: {emp_h.GS_apellidoPaterno} \nNSS: {emp_h.GS_numeroSeguroSocial} \nSUELDO POR HORA: {emp_h.GSsueldoPorHora} \nHORAS TRABAJADAS: {emp_h.GShorasTrabajadas} \nSALARIO CALCULADO: {emp_h.calcularPagoSemanal():C}");
-
-                                                    
-                                                }
-                                            }
-
-                                            break;
-
-                                        case 5:
-
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    Console.WriteLine("No ingresaste un número válido.");
-                                }
-                            } while (opcionsecundaria != 5);
-
-
-                            break;
-
-                        case 5:
-
-                            int id = 1;
-                            Stopwatch sw = Stopwatch.StartNew();
-
-                            for (int i = 1; i <= 250; i++)
-                            {
-                                EmpleadoAsalariado emp_a = new EmpleadoAsalariado("Sin Nombre", "Sin Apellido", 333, 333.00m);
-                                Console.WriteLine($"Pago del empleado asalariado ({id++}) :  {emp_a.calcularPagoSemanal():C}");
-
-                                EmpleadoPorComision emp_c = new EmpleadoPorComision("Sin Nombre", "Sin Apellido", 333, 333.00m, 444.00m);
-                                Console.WriteLine($"Pago del empleado por comision  ({id++}) :  {emp_c.calcularPagoSemanal():C}");
-
-                                EmpleadoAsalariadoPorComision emp_ac = new EmpleadoAsalariadoPorComision("Sin Nombre", "Sin Apellido", 333, 333.00m, 444.00m, 555.00m);
-                                Console.WriteLine($"Pago del empleado asalariado por comision ({id++}) :  {emp_ac.calcularPagoSemanal():C}");
-
-                                EmpleadoPorHoras emp_h = new EmpleadoPorHoras("Sin Apellido", 333, 333.00m, 3);
-                                Console.WriteLine($"Pago del empleado por horas ({id++}) :  {emp_h.calcularPagoSemanal():C}");
-                            }
-
-                            sw.Stop();
-                            Console.WriteLine($"Tiempo total: {sw.ElapsedMilliseconds} ms");
-
-                            break;
-                        case 6:
-                            Console.WriteLine("SALIENDO... ");
-                            break;
-                    }
-                }
-                else
+                if (!exito)
                 {
                     Console.WriteLine("No ingresaste un número válido.");
+                    continue;
+                }
+
+                switch (opcion)
+                {
+                    case 1: // AGREGAR EMPLEADOS
+                        do
+                        {
+                            Console.WriteLine("\n*~~ TIPOS DE EMPLEADOS ~~*");
+                            Console.WriteLine("[1] EMPLEADO ASALARIADO");
+                            Console.WriteLine("[2] EMPLEADO POR COMISION");
+                            Console.WriteLine("[3] EMPLEADO ASALARIADO POR COMISION");
+                            Console.WriteLine("[4] EMPLEADO POR HORA");
+                            Console.WriteLine("[5] SALIR");
+                            Console.Write("ELIGE UNA OPCION: ");
+
+                            input = Console.ReadLine();
+                            exito = byte.TryParse(input, out opcionsecundaria);
+
+                            if (!exito) { Console.WriteLine("No ingresaste un número válido."); continue; }
+
+                            switch (opcionsecundaria)
+                            {
+                                case 1:
+                                    Console.Write("Primer nombre: ");
+                                    primerNombre = Console.ReadLine();
+                                    Console.Write("Apellido paterno: ");
+                                    apellidoPaterno = Console.ReadLine();
+                                    Console.Write("Número seguro social: ");
+                                    numeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Salario semanal: ");
+                                    salarioSemanal = decimal.Parse(Console.ReadLine());
+
+                                    var empAs = new EmpleadoAsalariado(primerNombre, apellidoPaterno, numeroSeguroSocial, salarioSemanal);
+                                    asalariados.Add(empAs);
+
+                                    var nominaAs = new NominaEmpleadoAsalariado(empAs);
+                                    Console.WriteLine($"{empAs} - SALARIO CALCULADO: {nominaAs.CalcularPago():C}");
+                                    break;
+
+                                case 2:
+                                    Console.Write("Primer nombre: ");
+                                    primerNombre = Console.ReadLine();
+                                    Console.Write("Apellido paterno: ");
+                                    apellidoPaterno = Console.ReadLine();
+                                    Console.Write("Número seguro social: ");
+                                    numeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Ventas brutas: ");
+                                    ventasBrutas = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Tarifa comisión: ");
+                                    tarifaComision = decimal.Parse(Console.ReadLine());
+
+                                    var empCom = new EmpleadoPorComision(primerNombre, apellidoPaterno, numeroSeguroSocial, ventasBrutas, tarifaComision);
+                                    comisionarios.Add(empCom);
+
+                                    var nominaCom = new NominaEmpleadoPorComision(empCom);
+                                    Console.WriteLine($"{empCom} - SALARIO CALCULADO: {nominaCom.CalcularPago():C}");
+                                    break;
+
+                                case 3:
+                                    Console.Write("Primer nombre: ");
+                                    primerNombre = Console.ReadLine();
+                                    Console.Write("Apellido paterno: ");
+                                    apellidoPaterno = Console.ReadLine();
+                                    Console.Write("Número seguro social: ");
+                                    numeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Ventas brutas: ");
+                                    ventasBrutas = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Tarifa comisión: ");
+                                    tarifaComision = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Salario base: ");
+                                    salarioBase = decimal.Parse(Console.ReadLine());
+
+                                    var empAsCom = new EmpleadoAsalariadoPorComision(primerNombre, apellidoPaterno, numeroSeguroSocial, ventasBrutas, tarifaComision, salarioBase);
+                                    comisionariosAsalariados.Add(empAsCom);
+
+                                    var nominaAsCom = new NominaEmpleadoAsalariadoPorComision(empAsCom);
+                                    Console.WriteLine($"{empAsCom} - SALARIO CALCULADO: {nominaAsCom.CalcularPago():C}");
+                                    break;
+
+                                case 4:
+                                    Console.Write("Primer nombre: ");
+                                    primerNombre = Console.ReadLine();
+                                    Console.Write("Apellido paterno: ");
+                                    apellidoPaterno = Console.ReadLine();
+                                    Console.Write("Número seguro social: ");
+                                    numeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Sueldo por hora: ");
+                                    sueldoPorHora = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Horas trabajadas: ");
+                                    horasTrabajadas = int.Parse(Console.ReadLine());
+
+                                    var empH = new EmpleadoPorHoras(primerNombre, apellidoPaterno, numeroSeguroSocial, sueldoPorHora, horasTrabajadas);
+                                    empleadosPorHoras.Add(empH);
+
+                                    var nominaH = new NominaEmpleadoPorHoras(empH);
+                                    Console.WriteLine($"{empH} - SALARIO CALCULADO: {nominaH.CalcularPago():C}");
+                                    break;
+                            }
+                        } while (opcionsecundaria != 5);
+                        break;
+
+                    case 2: // REPORTE
+                        Console.WriteLine("\n--- REPORTE DE EMPLEADOS ---");
+                        foreach (var emp in asalariados)
+                            Console.WriteLine(new NominaEmpleadoAsalariado(emp));
+                        foreach (var emp in comisionarios)
+                            Console.WriteLine(new NominaEmpleadoPorComision(emp));
+                        foreach (var emp in comisionariosAsalariados)
+                            Console.WriteLine(new NominaEmpleadoAsalariadoPorComision(emp));
+                        foreach (var emp in empleadosPorHoras)
+                            Console.WriteLine(new NominaEmpleadoPorHoras(emp));
+                        break;
+
+                    case 3: // ELIMINAR EMPLEADOS
+                        Console.Write("ESCRIBE EL NÚMERO DE SEGURO SOCIAL DEL EMPLEADO A ELIMINAR: ");
+                        numeroSeguroSocial = Console.ReadLine();
+
+                        asalariados.RemoveAll(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+                        comisionarios.RemoveAll(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+                        comisionariosAsalariados.RemoveAll(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+                        empleadosPorHoras.RemoveAll(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+
+                        Console.WriteLine("Empleado eliminado (si existía).");
+                        break;
+
+                    case 4: // EDITAR EMPLEADOS
+                        Console.Write("ESCRIBE EL NÚMERO DE SEGURO SOCIAL DEL EMPLEADO A EDITAR: ");
+                        numeroSeguroSocial = Console.ReadLine();
+
+                        Console.WriteLine("\n*~~ ESPECIFICA EL TIPO DE CONTRATO ~~*");
+                        Console.WriteLine("[1] EMPLEADO ASALARIADO");
+                        Console.WriteLine("[2] EMPLEADO POR COMISION");
+                        Console.WriteLine("[3] EMPLEADO ASALARIADO POR COMISION");
+                        Console.WriteLine("[4] EMPLEADO POR HORA");
+                        Console.Write("Elige una opción: ");
+
+                        input = Console.ReadLine();
+                        exito = byte.TryParse(input, out opcionsecundaria);
+
+                        if (!exito) { Console.WriteLine("No ingresaste un número válido."); break; }
+
+                        switch (opcionsecundaria)
+                        {
+                            case 1: // Asalariado
+                                var empAs = asalariados.Find(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+                                if (empAs != null)
+                                {
+                                    Console.Write("Nuevo nombre: "); empAs.PrimerNombre = Console.ReadLine();
+                                    Console.Write("Nuevo apellido: "); empAs.ApellidoPaterno = Console.ReadLine();
+                                    Console.Write("Nuevo NSS: "); empAs.NumeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Nuevo salario semanal: "); empAs.SalarioSemanal = decimal.Parse(Console.ReadLine());
+
+                                    var nomina = new NominaEmpleadoAsalariado(empAs);
+                                    Console.WriteLine($"EDITADO => {empAs.PrimerNombre} {empAs.ApellidoPaterno} - NSS: {empAs.NumeroSeguroSocial} - PAGO: {nomina.CalcularPago():C}");
+                                }
+                                break;
+
+                            case 2: // Por Comisión
+                                var empCom = comisionarios.Find(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+                                if (empCom != null)
+                                {
+                                    Console.Write("Nuevo nombre: "); empCom.PrimerNombre = Console.ReadLine();
+                                    Console.Write("Nuevo apellido: "); empCom.ApellidoPaterno = Console.ReadLine();
+                                    Console.Write("Nuevo NSS: "); empCom.NumeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Nuevas ventas brutas: "); empCom.VentasBrutas = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Nueva tarifa comisión: "); empCom.TarifaComision = decimal.Parse(Console.ReadLine());
+
+                                    var nomina = new NominaEmpleadoPorComision(empCom);
+                                    Console.WriteLine($"EDITADO => {empCom.PrimerNombre} {empCom.ApellidoPaterno} - NSS: {empCom.NumeroSeguroSocial} - PAGO: {nomina.CalcularPago():C}");
+                                }
+                                break;
+
+                            case 3: // Asalariado por Comisión
+                                var empAsCom = comisionariosAsalariados.Find(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+                                if (empAsCom != null)
+                                {
+                                    Console.Write("Nuevo nombre: "); empAsCom.PrimerNombre = Console.ReadLine();
+                                    Console.Write("Nuevo apellido: "); empAsCom.ApellidoPaterno = Console.ReadLine();
+                                    Console.Write("Nuevo NSS: "); empAsCom.NumeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Nuevas ventas brutas: "); empAsCom.VentasBrutas = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Nueva tarifa comisión: "); empAsCom.TarifaComision = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Nuevo salario base: "); empAsCom.SalarioBase = decimal.Parse(Console.ReadLine());
+
+                                    var nomina = new NominaEmpleadoAsalariadoPorComision(empAsCom);
+                                    Console.WriteLine($"EDITADO => {empAsCom.PrimerNombre} {empAsCom.ApellidoPaterno} - NSS: {empAsCom.NumeroSeguroSocial} - PAGO: {nomina.CalcularPago():C}");
+                                }
+                                break;
+
+                            case 4: // Por Horas
+                                var empH = empleadosPorHoras.Find(e => e.NumeroSeguroSocial == numeroSeguroSocial);
+                                if (empH != null)
+                                {
+                                    Console.Write("Nuevo nombre: "); empH.PrimerNombre = Console.ReadLine();
+                                    Console.Write("Nuevo apellido: "); empH.ApellidoPaterno = Console.ReadLine();
+                                    Console.Write("Nuevo NSS: "); empH.NumeroSeguroSocial = Console.ReadLine();
+                                    Console.Write("Nuevo sueldo por hora: "); empH.SueldoPorHora = decimal.Parse(Console.ReadLine());
+                                    Console.Write("Nuevas horas trabajadas: "); empH.HorasTrabajadas = int.Parse(Console.ReadLine());
+
+                                    var nomina = new NominaEmpleadoPorHoras(empH);
+                                    Console.WriteLine($"EDITADO => {empH.PrimerNombre} {empH.ApellidoPaterno} - NSS: {empH.NumeroSeguroSocial} - PAGO: {nomina.CalcularPago():C}");
+                                }
+                                break;
+                        }
+                        break;
+
+                    case 5: // PRUEBA DE RENDIMIENTO
+                        Stopwatch sw = Stopwatch.StartNew();
+                        for (int i = 1; i <= 100; i++)
+                        {
+                            var e1 = new EmpleadoAsalariado("Test", "A", "111", 3000m);
+                            Console.WriteLine(new NominaEmpleadoAsalariado(e1));
+
+                            var e2 = new EmpleadoPorComision("Test", "B", "222", 50000m, 0.05m);
+                            Console.WriteLine(new NominaEmpleadoPorComision(e2));
+
+                            var e3 = new EmpleadoAsalariadoPorComision("Test", "C", "333", 70000m, 0.04m, 2500m);
+                            Console.WriteLine(new NominaEmpleadoAsalariadoPorComision(e3));
+
+                            var e4 = new EmpleadoPorHoras("Test", "D", "444", 200m, 42);
+                            Console.WriteLine(new NominaEmpleadoPorHoras(e4));
+                        }
+                        sw.Stop();
+                        Console.WriteLine($"Tiempo total: {sw.ElapsedMilliseconds} ms");
+                        break;
+
+                    case 6:
+                        Console.WriteLine("SALIENDO...");
+                        break;
                 }
             } while (opcion != 6);
         }
